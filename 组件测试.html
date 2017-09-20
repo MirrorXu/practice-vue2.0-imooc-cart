@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>vue组件测试</title>
+    <meta charset="utf-8">
+    <meta content="IE=dege,chrom=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 user-scalable=no">
+    <script src="js/lib/vue.js"></script>
+    <script src="js/lib/vue-resource.js"></script>
+    <!--<script src="js/component.js"></script>-->
+</head>
+<body>
+<div id="app">
+<ol>
+    <item v-for="v in groceryList" v-bind:todo="v" v-bind:times="restime"></item>
+</ol>
+</div>
+
+<div id="counter">
+    <p>{{ num }}</p>
+    <aa v-on:event="addTotal"></aa>
+    <br>
+    <br>
+    <aa v-on:event="addTotal"></aa>
+</div>
+
+<script>
+
+    Vue.component('aa',{
+        template:'<span style="background-color:red;display: inline-block;width: 40px" v-on:click="addNum2">{{num2}}</span>',
+        data:function () {
+            return  {
+                num2:0
+            }
+        },
+        methods:{
+            addNum2:function () {
+                this.num2++;
+                this.$emit( 'event')
+            }
+        }
+    })
+var app2 = new Vue({
+    el:'#counter',
+    data:{
+        num:5
+    },
+    methods:{
+        addTotal:function () {
+            this.num ++;
+        }
+    }
+})
+
+
+
+</script>
+
+</body>
+</html>

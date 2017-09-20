@@ -1,0 +1,26 @@
+{
+  "name": "practice-vue2.0-imooc-cart",
+  "version": "1.0.0",
+  "description": "vue2.0 -- 购物车教程 --慕课网",
+  "main": "index.js",
+  "dependencies": {
+    "vue": "^2.4.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.6.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MirrorXu/practice-vue2.0-imooc-cart.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MirrorXu/practice-vue2.0-imooc-cart/issues"
+  },
+  "homepage": "https://github.com/MirrorXu/practice-vue2.0-imooc-cart#readme"
+}

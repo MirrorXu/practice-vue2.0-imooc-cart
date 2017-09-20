@@ -10,10 +10,25 @@
     <link href="css/checkout.css" rel="stylesheet">
     <link href="css/modal.css" rel="stylesheet">
     <style type="text/css">
-        .quentity input {
-            width: 40px;
-            padding: 5px 10px;
+        /*.quentity input {*/
+            /*width: 40px;*/
+            /*padding: 5px 10px;*/
+            /*text-align: center;*/
+        /*}*/
+        .quantity button{
+            height: 100%;
+            float: left;
+            width: 20%;
+            background-color: #ddd;
+            font-size: 35px;
+            line-height: 45px;
+            vertical-align: middle;
             text-align: center;
+        }
+        .quantity input{
+            height: 100%;
+            float: left;
+            width: 60%;
         }
     </style>
 </head>
@@ -75,14 +90,14 @@
                             <li v-for=" v in productList">
                                 <div class="cart-tab-1">
                                     <div class="cart-item-check">
-                                        <a href="javascript:void 0" class="item-check-btn">
+                                        <a href="javascript:void 0" class="item-check-btn " v-bind:class="{'check':v.isChecked  }" @click="selectProduct(v)">
                                             <svg class="icon icon-ok">
                                                 <use xlink:href="#icon-ok"></use>
                                             </svg>
                                         </a>
                                     </div>
                                     <div class="cart-item-pic">
-                                        <img src="img/goods-1.jpg" alt="烟">
+                                        <img :src="v.productImage" alt="烟">
                                     </div>
                                     <div class="cart-item-title">
                                         <div class="item-name">{{v.productName}}</div>
@@ -95,22 +110,22 @@
                                     </div>
                                 </div>
                                 <div class="cart-tab-2">
-                                    <div class="item-price">{{ v.productPrice }}</div>
+                                    <div class="item-price">{{ v.productPrice | formatMoney }}</div>
                                 </div>
                                 <div class="cart-tab-3">
                                     <div class="item-quantity">
                                         <div class="select-self select-self-open">
                                             <div class="quantity">
-                                                <a href="javascript:void 0"></a>
-                                                <input type="text" value="0" disabled>
-                                                <a href="javascript:void 0"></a>
+                                                <button @click="changeMoney( v , -1 )" >-</button>
+                                                <input type="text" disabled  v-model="v.productQuantity">
+                                                <button @click="changeMoney(v , 1)">+</button>
                                             </div>
                                         </div>
                                         <div class="item-stock">有货</div>
                                     </div>
                                 </div>
                                 <div class="cart-tab-4">
-                                    <div class="item-price-total">0.00</div>
+                                    <div class="item-price-total">{{v.productPrice*v.productQuantity|  money( '元' ) }}</div>
                                 </div>
                                 <div class="cart-tab-5">
                                     <div class="cart-item-operation">
@@ -131,7 +146,7 @@
                     <div class="cart-foot-l">
                         <div class="item-all-check">
                             <a href="javascript:void 0">
-                    <span class="item-check-btn">
+                    <span class="item-check-btn" :class="{'check': checkAllFlag}" @click="selectAll()">
                       <svg class="icon icon-ok">
                           <use xlink:href="#icon-ok"></use>
                       </svg>
