@@ -6,7 +6,11 @@ var vm = new Vue({
     data: {
         message: 'hello Vue',
         productList: [],
-        checkAllFlag:''
+        checkAllFlag:'',
+        totalMoney:0,
+        showMd:false,
+        productIndex:undefined,
+        canGo:false
     },
     updated: function () {
         var dom = document.getElementById('dom');
@@ -46,30 +50,60 @@ var vm = new Vue({
                     product.productQuantity = 1
                 }
             }
-
-            console.log(product.productQuantity);
+            this.calcTotalMoney();
+            // console.log(product.productQuantity);
         },
         selectProduct:function (v) {
+
             if( typeof v.isChecked == 'undefined' ){
                 // Vue.set(v , 'isChecked' ,true );  // 全局注册
                 this.$set( v , 'isChecked' , true);
             }else {
                 v.isChecked = !v.isChecked
             }
+            if(this.checkAllFlag == true && v.isChecked == false){
+                this.checkAllFlag = v.isChecked;
+            }
 
             console.log( v.isChecked );
+            this.calcTotalMoney();
         },
         selectAll:function () {
             this.checkAllFlag = !this.checkAllFlag;
             var _this = this;
-            if( this.checkAllFlag ){
-                this.productList.forEach(function (v , i) {
-                    if( v.isChecked == 'undefined'){
-                        _this.$set( v ,'isChecked' , _this.checkAllFlag );
-                    }else {
-                        v.isChecked = _this.checkAllFlag;
-                    }
-                })
+            _this.productList.forEach(function (v , i) {
+                if( v.isChecked == 'undefined'){
+                    _this.$set( v ,'isChecked' , _this.checkAllFlag );
+                }else {
+                    v.isChecked = _this.checkAllFlag;
+                }
+            })
+            this.calcTotalMoney();
+        }  ,
+        calcTotalMoney:function () {
+            var _this = this ;
+            _this.totalMoney = 0;
+            _this.productList.forEach(function ( v , i ) {
+                if( v.isChecked){
+                    _this.totalMoney += v.productQuantity*v.productPrice;
+                 }
+            })
+        },
+        changeMd:function () {
+            this.showMd = !this.showMd ;
+        },
+        confirmProduct:function ( i ) {
+            this.changeMd();
+            this.productIndex = i;
+        },
+        delProduct:function () {
+            alert('删除当前页第'+(this.productIndex+1) + '个商品' );
+            if( this.productIndex != undefined ){
+                this.productList.splice(this.productIndex , 1);
+                this.changeMd();
+                this.productIndex= undefined ;
+            }else{
+                alert( 'eorr:productIndex', '无法获取到商品参数')
             }
         }
     }
